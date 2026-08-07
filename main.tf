@@ -16,23 +16,25 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-resource "aws_subnet" "public_1" {
+resource "aws_subnet" "public_az1" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "ap-south-2a"
   map_public_ip_on_launch = true
   tags = {
-    Name = "shopease-public-subnet-1"
+    Name                     = "shopease-public-subnet-1"
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
-resource "aws_subnet" "public_2" {
+resource "aws_subnet" "public_az2" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.2.0/24"
   availability_zone       = "ap-south-2b"
   map_public_ip_on_launch = true
   tags = {
-    Name = "shopease-public-subnet-2"
+    Name                     = "shopease-public-subnet-2"
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
@@ -49,12 +51,12 @@ resource "aws_route" "public_internet" {
   gateway_id             = aws_internet_gateway.main.id
 }
 
-resource "aws_route_table_association" "public_1" {
+resource "aws_route_table_association" "public_az1" {
   route_table_id = aws_route_table.public.id
-  subnet_id      = aws_subnet.public_1.id
+  subnet_id      = aws_subnet.public_az1.id
 }
 
-resource "aws_route_table_association" "public_2" {
+resource "aws_route_table_association" "public_az2" {
   route_table_id = aws_route_table.public.id
-  subnet_id = aws_subnet.public_2.id
+  subnet_id      = aws_subnet.public_az2.id
 }
