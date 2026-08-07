@@ -24,6 +24,7 @@ resource "aws_subnet" "public_az1" {
   tags = {
     Name                     = local.public_subnet_1_name
     "kubernetes.io/role/elb" = "1"
+    "kubernetes.io/cluster/shopease-dev" = "shared"
   }
 }
 
@@ -35,6 +36,7 @@ resource "aws_subnet" "public_az2" {
   tags = {
     Name                     = local.public_subnet_2_name
     "kubernetes.io/role/elb" = "1"
+    "kubernetes.io/cluster/shopease-dev" = "shared"
   }
 }
 

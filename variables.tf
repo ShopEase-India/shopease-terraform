@@ -34,3 +34,14 @@ variable "subnet_2_az" {
   type        = string
   default     = "ap-south-2b"
 }
+variable "cluster_name" {
+  description = "EKS cluster name"
+  type        = string
+  default     = "shopease-dev"
+}
+
+variable "node_instance_type" {
+  description = "EC2 instance type for EKS nodes"
+  type        = string
+  default     = "t3.medium"
+}

@@ -2,7 +2,7 @@ locals {
   project     = "shopease"
   environment = var.environment
 
-  commom_tags = {
+  common_tags = {
     Project     = "ShopEase"
     Environment = var.environment
     ManagedBy   = "Terraform"
@@ -14,4 +14,10 @@ locals {
   public_subnet_2_name = "${local.project}-public-subnet-az2"
 
   igw_name = "${local.project}-${local.environment}-igw"
+
+  eks_node_policies = [
+    "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",
+    "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  ]
 }
