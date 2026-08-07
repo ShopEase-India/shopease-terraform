@@ -4,7 +4,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "shopease-dev-vpc"
+    Name = local.vpc_name
   }
 }
 
@@ -12,28 +12,28 @@ resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Name = "shopease-dev-igw"
+    Name = local.igw_name
   }
 }
 
 resource "aws_subnet" "public_az1" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "ap-south-2a"
+  cidr_block              = var.public_subnet_1_cidr
+  availability_zone       = var.subnet_1_az
   map_public_ip_on_launch = true
   tags = {
-    Name                     = "shopease-public-subnet-1"
+    Name                     = local.public_subnet_1_name
     "kubernetes.io/role/elb" = "1"
   }
 }
 
 resource "aws_subnet" "public_az2" {
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = "10.0.2.0/24"
-  availability_zone       = "ap-south-2b"
+  cidr_block              = var.public_subnet_2_cidr
+  availability_zone       = var.subnet_2_az
   map_public_ip_on_launch = true
   tags = {
-    Name                     = "shopease-public-subnet-2"
+    Name                     = local.public_subnet_2_name
     "kubernetes.io/role/elb" = "1"
   }
 }
