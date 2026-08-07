@@ -35,3 +35,10 @@ resource "aws_subnet" "public_2" {
     Name = "shopease-public-subnet-2"
   }
 }
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name = "shopease-public-route-table"
+  }
+}

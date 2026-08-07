@@ -1,0 +1,14 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+
+# Keep the lock file
+!.terraform.lock.hcl
+
+crash.log
+
+# IDE
+.vscode/
+.idea/
