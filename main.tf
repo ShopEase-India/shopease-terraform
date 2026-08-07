@@ -1,0 +1,62 @@
+resource "aws_vpc" "main" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
+  tags = {
+    Name = "shopease-dev-vpc"
+  }
+}
+
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "shopease-dev-igw"
+  }
+}
+
+resource "aws_subnet" "public_az1" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "ap-south-2a"
+  map_public_ip_on_launch = true
+  tags = {
+    Name                     = "shopease-public-subnet-1"
+    "kubernetes.io/role/elb" = "1"
+  }
+}
+
+resource "aws_subnet" "public_az2" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "ap-south-2b"
+  map_public_ip_on_launch = true
+  tags = {
+    Name                     = "shopease-public-subnet-2"
+    "kubernetes.io/role/elb" = "1"
+  }
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+  tags = {
+    Name = "shopease-public-route-table"
+  }
+}
+
+resource "aws_route" "public_internet" {
+  route_table_id         = aws_route_table.public.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.main.id
+}
+
+resource "aws_route_table_association" "public_az1" {
+  route_table_id = aws_route_table.public.id
+  subnet_id      = aws_subnet.public_az1.id
+}
+
+resource "aws_route_table_association" "public_az2" {
+  route_table_id = aws_route_table.public.id
+  subnet_id      = aws_subnet.public_az2.id
+}

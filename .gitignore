@@ -1,0 +1,33 @@
+# -----------------------------
+# Terraform
+# -----------------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+
+# Keep lock file
+!.terraform.lock.hcl
+
+terraform.tfvars
+*.auto.tfvars
+
+crash.log
+
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# -----------------------------
+# IntelliJ IDEA
+# -----------------------------
+.idea/
+*.iml
+out/
+
+# -----------------------------
+# OS Files
+# -----------------------------
+.DS_Store
+Thumbs.db
