@@ -22,8 +22,10 @@ resource "aws_subnet" "public_az1" {
   availability_zone       = var.subnet_1_az
   map_public_ip_on_launch = true
   tags = {
-    Name                     = local.public_subnet_1_name
-    "kubernetes.io/role/elb" = "1"
+    Name                                        = local.public_subnet_1_name
+    "kubernetes.io/role/elb"                    = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "karpenter.sh/discovery"                    = var.cluster_name
   }
 }
 
@@ -33,8 +35,10 @@ resource "aws_subnet" "public_az2" {
   availability_zone       = var.subnet_2_az
   map_public_ip_on_launch = true
   tags = {
-    Name                     = local.public_subnet_2_name
-    "kubernetes.io/role/elb" = "1"
+    Name                                        = local.public_subnet_2_name
+    "kubernetes.io/role/elb"                    = "1"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "karpenter.sh/discovery"                    = var.cluster_name
   }
 }
 
