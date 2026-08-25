@@ -6,7 +6,7 @@ provider "aws" {
       Project     = "ShopEase"
       Environment = var.environment
       ManagedBy   = "Terraform"
-      Owner       = "Platform-Team"
+      Owner       = "satya"
     }
   }
 }
